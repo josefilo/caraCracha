@@ -61,8 +61,8 @@ func NewNotFoundError(message string) *ApiError {
 
 func NewUnauthorizedError(message string) *ApiError {
 	return &ApiError{
-		message: message,
-		err:     "unauthorized",
-		code:    http.StatusUnauthorized,
+		Message: message,
+		Err:     "unauthorized",
+		Code:    http.StatusUnauthorized,
 	}
 }
