@@ -12,30 +12,28 @@ import (
 	enTranslation "github.com/go-playground/validator/v10/translations/en"
 )
 
-var (
-	transl ut.Translator
-)
+var translator ut.Translator
 
 func init() {
-	if val, ok := binding.Validator.Engine().(*validator.Validate); ok {
-		en := en.New()
-		un := ut.New(en, en)
-		transl, _ = un.GetTranslator("en")
-		enTranslation.RegisterDefaultTranslations(val, transl)
+	if validador, ok := binding.Validator.Engine().(*validator.Validate); ok {
+		englishLanguage := en.New()
+		universalTranslator := ut.New(englishLanguage, englishLanguage)
+		translator, _ = universalTranslator.GetTranslator("en")
+		enTranslation.RegisterDefaultTranslations(validador, translator)
 	}
 }
 
 func ValidationUserError(validationErr error) *api_errors.ApiError {
-	var jsonErr *json.UnmarshalTypeError
-	var jsonValidationErr validator.ValidationErrors
+	var unMarshalTypeError *json.UnmarshalTypeError
+	var ValidationErrors validator.ValidationErrors
 
-	if errors.As(validationErr, &jsonErr) {
+	if errors.As(validationErr, &unMarshalTypeError) {
 		return api_errors.NewBadRequestError("Invalid field type")
-	} else if errors.As(validationErr, &jsonValidationErr) {
+	} else if errors.As(validationErr, &ValidationErrors) {
 		errorsCauses := []api_errors.Cause{}
 		for _, errors := range validationErr.(validator.ValidationErrors) {
 			cause := api_errors.Cause{
-				Message: errors.Translate(transl),
+				Message: errors.Translate(translator),
 				Field:   errors.Field(),
 			}
 			errorsCauses = append(errorsCauses, cause)
