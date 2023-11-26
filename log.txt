@@ -1,6 +1,0 @@
-{"level":"INFO","time":"2023-11-15T22:52:50.044-0300","caller":"logger/logger.go:34","message":"Init routes","method":"InitRoutes"}
-{"level":"INFO","time":"2023-11-15T23:04:22.768-0300","caller":"logger/logger.go:34","message":"Init routes","method":"InitRoutes"}
-{"level":"INFO","time":"2023-11-15T23:05:00.434-0300","caller":"logger/logger.go:34","message":"Init routes","method":"InitRoutes"}
-{"level":"WARN","time":"2023-11-15T23:05:00.434-0300","caller":"logger/logger.go:42","message":"Init routes","method":"InitRoutes"}
-{"level":"INFO","time":"2023-11-15T23:13:06.618-0300","caller":"logger/logger.go:34","message":"Starting the application"}
-{"level":"INFO","time":"2023-11-15T23:13:55.790-0300","message":"Starting the application"}
