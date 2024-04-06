@@ -1,19 +1,14 @@
 package main
 
 import (
-	"github.com/Josefreitas788/gestao_de_financas/src/configuration/logger"
-	"github.com/Josefreitas788/gestao_de_financas/src/controller/routes"
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
+	"github.com/josefilo/internal/routes"
 	"go.uber.org/zap"
+	"gorm.io/gorm/logger"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		logger.Error("Error loading .env file",
-			zap.Any("error", err))
-	}
+
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup)
 
