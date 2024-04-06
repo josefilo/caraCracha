@@ -1,16 +1,12 @@
 package model
 
 type User struct {
-	ID        uint   `gorm:"primaryKey"`
-	Email	 string `gorm:"unique"`
-	Password string `gorm:"not null"`
-	Name     string `gorm:"not null"`
-	BirthDate string `gorm:"not null"`
-	CreatedAt string `gorm:"autoCreateTime"`
-	UpdatedAt string `gorm:"autoUpdateTime"`
+    ID        uint          `bson:"_id"`
+    Email     string        `bson:"email"`
+    Password  string        `bson:"password"`
+    Name      string        `bson:"name"`
+    BirthDate string        `bson:"birthDate"`
+    CreatedAt string        `bson:"createdAt"`
+    UpdatedAt string        `bson:"updatedAt"`
 }
 
-// Deixe no singular
-func (User) TableName() string {
-	return "user"
-}

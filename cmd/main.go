@@ -9,6 +9,12 @@ import (
 
 func main() {
 
+	err := godotenv.Load()
+if err != nil {
+	logger.Error("Error loading .env file",
+		zap.Any("error", err))
+}
+
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup)
 
