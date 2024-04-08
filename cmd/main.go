@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/josefilo/internal/routes"
 	"go.uber.org/zap"
 	"gorm.io/gorm/logger"
@@ -10,10 +11,10 @@ import (
 func main() {
 
 	err := godotenv.Load()
-if err != nil {
-	logger.Error("Error loading .env file",
-		zap.Any("error", err))
-}
+	if err != nil {
+		zap.L().Error("Error loading .env file",
+			zap.Any("error", err))
+	}
 
 	router := gin.Default()
 	routes.InitRoutes(&router.RouterGroup)

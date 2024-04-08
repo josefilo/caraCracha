@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: caracracha_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: caracracha
+      MONGO_INITDB_ROOT_PASSWORD: caracracha
+      MONGO_INITDB_DATABASE: caracracha
+    volumes:
+      - caracracha_mongodb_data:/data/db
+    ports:
+      - 27017:27017
+volumes:
+  caracracha_mongodb_data:

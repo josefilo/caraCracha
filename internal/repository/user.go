@@ -1,27 +1,23 @@
 package repository
 
 import (
+	"context"
+
+	"github.com/josefilo/caraCracha/internal/entity"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type UserReporitory interface {
-	CreateUser(ctx context.Context,user *model.User) (*model.User,error)
-	GetUser(ctx context.Context, id uint) (*model.User,error)
-	GetUserByEmail(ctx context.Context, email string) (*model.User,error)
-	UpdateUser(ctx context.Context, user *model.User) (*model.User,error)
-}
-
-type userRepository struct {
+type UserRepositoryMongo struct {
 	collection *mongo.Collection
 }
 
-func NewUserRepository(collection *mongo.Collection) UserReporitory {
-	return &userRepository{
-		collection: collection,
+func NewUserRepositoryMongo(collection *mongo.Collection) *UserRepositoryMongo {
+	return &UserRepositoryMongo{
+		collection: collection
 	}
 }
 
-func (r *userRepository) CreateUser(ctx context.Context, user *model.User) (*model.User,error) {
+func (r *UserRepositoryMongo) CreateUser(ctx context.Context, user *entity.User) (*entity.User, error) {
 	_, err := r.collection.InsertOne(ctx, user)
 	if err != nil {
 		return nil, err
@@ -29,4 +25,28 @@ func (r *userRepository) CreateUser(ctx context.Context, user *model.User) (*mod
 	return user, nil
 }
 
+func (r *UserRepositoryMongo) GetUser(ctx context.Context, id uint) (*entity.User, error) {
+	user := &entity.User{}
+	err := r.collection.FindOne(ctx, entity.User{ID: id}).Decode(user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
 
+func (r *UserRepositoryMongo) GetUserByEmail(ctx context.Context, email string) (*entity.User, error) {
+	user := &entity.User{}
+	err := r.collection.FindOne(ctx, entity.User{Email: email}).Decode(user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
+func (r *UserRepositoryMongo) UpdateUser(ctx context.Context, user *entity.User) (*entity.User, error) {
+	_, err := r.collection.ReplaceOne(ctx, entity.User{ID: user.ID}, user)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}

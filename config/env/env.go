@@ -1,28 +1,25 @@
 package config
 
-import "github.com/joho/godotenv"
-
-err := godotenv.Load()
-if err != nil {
-	logger.Error("Error loading .env file",
-		zap.Any("error", err))
-}
+import (
+	"fmt"
+	"os"
+)
 
 type MongodbConnection struct {
-	HOST string
-	PORT string
-	USER string
+	HOST     string
+	PORT     string
+	USER     string
 	PASSWORD string
-	DB   string
+	DB       string
 }
 
 func getMongodbConnection() MongodbConnection {
 	return MongodbConnection{
-		HOST: os.Getenv("MONGODB_HOST"),
-		PORT: os.Getenv("MONGODB_PORT"),
-		USER: os.Getenv("MONGODB_USER"),
+		HOST:     os.Getenv("MONGODB_HOST"),
+		PORT:     os.Getenv("MONGODB_PORT"),
+		USER:     os.Getenv("MONGODB_USER"),
 		PASSWORD: os.Getenv("MONGODB_PASS"),
-		DB:   os.Getenv("MONGODB_DB"),
+		DB:       os.Getenv("MONGODB_DB"),
 	}
 }
 
@@ -35,7 +32,3 @@ func getMongodbConnectionString() string {
 		connection.PORT,
 		connection.DB)
 }
-
-
-
-

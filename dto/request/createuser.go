@@ -1,25 +1,23 @@
 package request
 
-import 
-(
-	"github.com/go-ozzo/ozzo-validation/v4"
+import (
+	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/go-ozzo/ozzo-validation/v4/is"
 )
 
-
 type CreateUser struct {
-	email     string `json:"email"`
-	password  string `json:"password"`
-	name      string `json:"name"`
-	birthDate string `json:"birth_date"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	Name      string `json:"name"`
+	BirthDate string `json:"birth_date"`
 }
 
-func (c createUser) Validate() error {
+func (c CreateUser) Validate() error {
 	return validation.ValidateStruct(
 		&c,
-		validation.Field(&c.email, validation.Required, is.Email),
-		validation.Field(&c.password, validation.Required, validation.Length(1, 255)),
-		validation.Field(&c.name, validation.Required, validation.Length(1, 255)),
-		validation.Field(&c.birthDate, validation.Required, validation.Date("2006-01-02")),	
+		validation.Field(&c.Email, validation.Required, is.Email),
+		validation.Field(&c.Password, validation.Required, validation.Length(1, 255)),
+		validation.Field(&c.Name, validation.Required, validation.Length(1, 255)),
+		validation.Field(&c.BirthDate, validation.Required, validation.Date("2006-01-02")),
 	)
 }
