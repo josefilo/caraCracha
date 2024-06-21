@@ -13,7 +13,7 @@ type UserRepositoryMongo struct {
 
 func NewUserRepositoryMongo(collection *mongo.Collection) *UserRepositoryMongo {
 	return &UserRepositoryMongo{
-		collection: collection
+		collection: collection,
 	}
 }
 

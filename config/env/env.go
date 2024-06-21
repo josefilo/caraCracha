@@ -1,4 +1,4 @@
-package config
+package env
 
 import (
 	"fmt"
@@ -13,22 +13,21 @@ type MongodbConnection struct {
 	DB       string
 }
 
-func getMongodbConnection() MongodbConnection {
+func NewMongoDBConnection() MongodbConnection {
 	return MongodbConnection{
-		HOST:     os.Getenv("MONGODB_HOST"),
-		PORT:     os.Getenv("MONGODB_PORT"),
-		USER:     os.Getenv("MONGODB_USER"),
-		PASSWORD: os.Getenv("MONGODB_PASS"),
-		DB:       os.Getenv("MONGODB_DB"),
+		HOST:     os.Getenv("MONGO_HOST"),
+        PORT:     os.Getenv("MONGO_PORT"),
+        USER:     os.Getenv("MONGO_INITDB_ROOT_USERNAME"),
+        PASSWORD: os.Getenv("MONGO_INITDB_ROOT_PASSWORD"),
 	}
 }
 
-func getMongodbConnectionString() string {
+func (MongodbConnection) URI() string {
 	connection := getMongodbConnection()
 	return fmt.Sprintf("mongodb://%s:%s@%s:%s/%s",
 		connection.USER,
 		connection.PASSWORD,
 		connection.HOST,
-		connection.PORT,
-		connection.DB)
+		connection.PORT
+	)
 }

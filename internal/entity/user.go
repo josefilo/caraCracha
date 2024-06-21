@@ -1,5 +1,7 @@
 package entity
 
+import "context"
+
 type User struct {
 	ID        uint   `bson:"_id"`
 	Email     string `bson:"email"`
