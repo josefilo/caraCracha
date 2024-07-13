@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/josefilo/caraCracha/internal/handler/userhandler"
+	"github.com/josefilo/caraCracha/internal/api/handler/userhandler"
 )
 
 // InitRoutes initializes the routes for the application
