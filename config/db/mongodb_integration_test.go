@@ -1,27 +1,25 @@
 package db
 
 import (
-    "context"
-    "testing"
-    "time"
-
-    "go.mongodb.org/mongo-driver/mongo"
-    "go.mongodb.org/mongo-driver/mongo/options"
-    "github.com/josefilo/caraCracha/config/env"
+	"testing"
 )
 
-func TestConnect(t *testing.T) {
-    ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-    defer cancel()
+func TestNewMongoDBConnection(t *testing.T) {
+	// Given
+	// When
+	_, err := NewMongoDBClient()
+	// Then
+	if err != nil {
+		t.Errorf("Expected error to be nil, got %s", err)
+	}
+}
 
-    mongodbConnection := env.NewMongoDBConnection()
-    client, err := mongo.Connect(ctx, options.Client().ApplyURI(mongodbConnection.URI()))
-    if err != nil {
-        t.Fatalf("Failed to connect to MongoDB: %v", err)
-    }
-
-    err = client.Ping(ctx, nil)
-    if err != nil {
-        t.Fatalf("Failed to ping MongoDB: %v", err)
-    }
+func TestNewMongoDBCollection(t *testing.T) {
+	// Given
+	// When
+	_, err := NewMongoDBCollection("test", "test")
+	// Then
+	if err != nil {
+		t.Errorf("Expected error to be nil, got %s", err)
+	}
 }
