@@ -2,14 +2,14 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
-	"github.com/josefilo/caraCracha/internal/routes"
+	"github.com/josefilo/caraCracha/config/env"
+	"github.com/josefilo/caraCracha/internal/api/routes"
 	"go.uber.org/zap"
 )
 
 func main() {
 
-	err := godotenv.Load()
+	err := env.Load()
 	if err != nil {
 		zap.L().Error("Error loading .env file",
 			zap.Any("error", err))
