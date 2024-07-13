@@ -3,31 +3,44 @@ package env
 import (
 	"fmt"
 	"os"
+
+	"github.com/joho/godotenv"
 )
+
+func Load() error {
+	err := godotenv.Load("../../.env")
+	if err != nil {
+		return err
+	}
+	return nil
+}
 
 type MongodbConnection struct {
 	HOST     string
 	PORT     string
 	USER     string
 	PASSWORD string
-	DB       string
 }
 
 func NewMongoDBConnection() MongodbConnection {
+
+	err := Load()
+	if err != nil {
+		panic(fmt.Sprintf("Error loading .env file: %v", err))
+	}
 	return MongodbConnection{
-		HOST:     os.Getenv("MONGO_HOST"),
-        PORT:     os.Getenv("MONGO_PORT"),
-        USER:     os.Getenv("MONGO_INITDB_ROOT_USERNAME"),
-        PASSWORD: os.Getenv("MONGO_INITDB_ROOT_PASSWORD"),
+		HOST:     os.Getenv("MONGODB_HOST"),
+		PORT:     os.Getenv("MONGODB_PORT"),
+		USER:     os.Getenv("MONGODB_USER"),
+		PASSWORD: os.Getenv("MONGODB_PASSWORD"),
 	}
 }
 
-func (MongodbConnection) URI() string {
-	connection := getMongodbConnection()
-	return fmt.Sprintf("mongodb://%s:%s@%s:%s/%s",
-		connection.USER,
-		connection.PASSWORD,
-		connection.HOST,
-		connection.PORT
+func (mongodbConnection MongodbConnection) URI() string {
+	return fmt.Sprintf("mongodb://%s:%s@%s:%s",
+		mongodbConnection.USER,
+		mongodbConnection.PASSWORD,
+		mongodbConnection.HOST,
+		mongodbConnection.PORT,
 	)
 }
