@@ -1,10 +1,12 @@
 package entity
 
-import "context"
+import (
+	"context"
+)
 
 type User struct {
-	ID        uint   `bson:"_id"`
-	Email     string `bson:"email"`
+	ID        string `bson:"_id"`
+	Email     string `bson:"_email"`
 	Password  string `bson:"password"`
 	Name      string `bson:"name"`
 	BirthDate string `bson:"birthDate"`
@@ -14,7 +16,7 @@ type User struct {
 
 type IUserRepository interface {
 	CreateUser(ctx context.Context, user *User) (*User, error)
-	GetUser(ctx context.Context, id uint) (*User, error)
+	GetUser(ctx context.Context, id string) (*User, error)
 	GetUserByEmail(ctx context.Context, email string) (*User, error)
 	UpdateUser(ctx context.Context, user *User) (*User, error)
 }

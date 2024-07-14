@@ -6,6 +6,7 @@ import (
 
 	"github.com/josefilo/caraCracha/config/env"
 	"github.com/pkg/errors"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -43,6 +44,16 @@ func NewMongoDBCollection(databaseName, collectionName string) (*mongo.Collectio
 	collection := client.Database(databaseName).Collection(collectionName)
 	if collection == nil {
 		return nil, errors.New("creation of collection failed")
+	}
+	_, err = collection.Indexes().CreateOne(
+		context.Background(),
+		mongo.IndexModel{
+			Keys:    bson.M{"_email": 1},
+			Options: options.Index().SetUnique(true),
+		},
+	)
+	if err != nil {
+		return nil, errors.Wrap(err, "creation of email index failed")
 	}
 	return collection, nil
 }
